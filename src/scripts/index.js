@@ -1,4 +1,17 @@
-import './pages/index.css';
+import '../pages/index.css';
+import {initialCards} from "./cards";
+import {popupEventListener, openImageModal, handleLikeButon, handleDislikeButon, likeButtonEventListener} from './utils';
+import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpenImage, allLikeButtons} from './variable';
+
+
+
+const openModalWindow = (modalWindow) => {
+  modalWindow.classList.add("popup_is-opened");
+};
+
+
+
+
 
 // @todo: Темплейт карточки
 const template = document.querySelector("#card-template").content;
@@ -16,6 +29,9 @@ function createCard(item, deleteCard) {
   cardTitle.textContent = item.name;
   cardImage.src = item.link;
   cardDeleteButton.addEventListener('click', deleteCard);
+  const openModal = () => openImageModal(cardElement, modalOpenImage);
+  popupEventListener(cardImage, modalOpenImage, openModal);
+  likeButtonEventListener(cardElement);
   return cardElement;
 }
 
@@ -31,4 +47,8 @@ function deleteCard(cardElement) {
     const cardItem = createCard(item, deleteCard);
     placesList.append(cardItem);
   });
+
+
+popupEventListener(buttonPlus, modalNewCard);
+popupEventListener(buttonEditProfile, modalEditProfile);
 
