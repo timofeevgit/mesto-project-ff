@@ -6,4 +6,4 @@ export const modalEditProfile = document.querySelector(".popup_type_edit");
 
 export const modalOpenImage = document.querySelector(".popup_type_image");
 
-export const allLikeButtons = document.querySelectorAll('.card__like-button')
+export const allLikeButtons = document.querySelectorAll('.card__like-button');

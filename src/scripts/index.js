@@ -10,9 +10,6 @@ const openModalWindow = (modalWindow) => {
 };
 
 
-
-
-
 // @todo: Темплейт карточки
 const template = document.querySelector("#card-template").content;
 
@@ -36,13 +33,12 @@ function createCard(item, deleteCard) {
 }
 
 // @todo: Функция удаления карточки
-function deleteCard(cardElement) {
+function deleteCard(cardElement) { // с аргументом cardElement произойдет то, что написано в теле функции, а сам он будет передан в функцию выше и отработает при клике
   const deletedCard = cardElement.target.closest('.card');
   deletedCard.remove();
 }
 
 // @todo: Вывести карточки на страницу
-
   initialCards.forEach((item) => {
     const cardItem = createCard(item, deleteCard);
     placesList.append(cardItem);
@@ -51,4 +47,5 @@ function deleteCard(cardElement) {
 
 popupEventListener(buttonPlus, modalNewCard);
 popupEventListener(buttonEditProfile, modalEditProfile);
+
 
