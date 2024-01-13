@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import {initialCards} from "./cards";
-import {popupEventListener, openImageModal, handleLikeButon, handleDislikeButon, likeButtonEventListener} from './utils';
+import {popupEventListener, openImageModal, handleLikeButon, handleDislikeButon, likeButtonEventListener, handleEditProfile, handleAddCard} from './utils';
 import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpenImage, allLikeButtons} from './variable';
 
 
@@ -26,26 +26,34 @@ function createCard(item, deleteCard) {
   cardTitle.textContent = item.name;
   cardImage.src = item.link;
   cardDeleteButton.addEventListener('click', deleteCard);
+  // cardDeleteButton.addEventListener('click', (node)  => {
+  //     deleteCard(node)
+  //   }
+  // );
   const openModal = () => openImageModal(cardElement, modalOpenImage);
   popupEventListener(cardImage, modalOpenImage, openModal);
   likeButtonEventListener(cardElement);
   return cardElement;
 }
 
+// @todo: Вывести карточки на страницу
+initialCards.forEach((item) => {
+  const cardItem = createCard(item, deleteCard);
+  placesList.append(cardItem);
+});
+
 // @todo: Функция удаления карточки
-function deleteCard(cardElement) { // с аргументом cardElement произойдет то, что написано в теле функции, а сам он будет передан в функцию выше и отработает при клике
+function deleteCard(cardElement) {
   const deletedCard = cardElement.target.closest('.card');
   deletedCard.remove();
 }
 
-// @todo: Вывести карточки на страницу
-  initialCards.forEach((item) => {
-    const cardItem = createCard(item, deleteCard);
-    placesList.append(cardItem);
-  });
+
 
 
 popupEventListener(buttonPlus, modalNewCard);
 popupEventListener(buttonEditProfile, modalEditProfile);
+handleEditProfile();
+handleAddCard(createCard, deleteCard, placesList);
 
 
