@@ -7,6 +7,8 @@ export const modalEditProfile = document.querySelector(".popup_type_edit");
 export const modalOpenImage = document.querySelector(".popup_type_image");
 
 
+// @todo: DOM узлы
+export const placesList = document.querySelector(".places__list");
 
 // export const allLikeButtons = document.querySelectorAll('.card__like-button');
 // export const formElement = document.querySelector('.popup__form');

@@ -1,3 +1,6 @@
+// import {createCard, deleteCard} from "./cards";
+import {handleLikeButon, setLikeButtonEventListener} from "./cards";
+
 export const handleOpenModal = (modalWindow) => {
   modalWindow.classList.add("popup_is-opened");
   document.addEventListener("keydown", handleCloseModalByEsc);
@@ -41,16 +44,8 @@ export const openImageModal = (cardNode, modalOpenImage) => {
   console.log(cardImage, cardImageTitle, imageModal, imageModalCaption);
 };
 
-export const handleLikeButon = (likeButtonNode) => {
-  likeButtonNode.classList.toggle("card__like-button_is-active");
-};
 
-export const setLikeButtonEventListener = (cardNode) => {
-  const likeButtonNode = cardNode.querySelector(".card__like-button");
-  likeButtonNode.addEventListener("click", () =>
-    handleLikeButon(likeButtonNode)
-  );
-};
+
 
 
 
@@ -116,7 +111,7 @@ export function handleAddCard(createCard, deleteCard, placesList) {
       link: cardUrlInput.value,
     };
 
-    const cardItem = createCard(card, deleteCard);
+    const cardItem = createCard(card, {deleteCard, likeCard: setLikeButtonEventListener, handleImageClick: setPopupEventListener});
     placesList.prepend(cardItem);
     handleCloseModal(popupNewCard);
     cardNameInput.value = "";
