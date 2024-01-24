@@ -1,25 +1,30 @@
 export const handleOpenModal = (modalWindow) => {
   modalWindow.classList.add("popup_is-opened");
+  document.addEventListener("keydown", handleCloseModalByEsc);
 };
 
 export const handleCloseModal = (modalWindow) => {
   modalWindow.classList.remove("popup_is-opened");
+  document.removeEventListener('keydown', handleCloseModalByEsc);
 };
 
-export const popupEventListener = (openButton, popupNode, callBack) => {
-  const closeButton = popupNode.querySelector(".popup__close");
+function handleCloseModalByEsc(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    handleCloseModal(openedPopup);
+  };
+};
+
+export const setPopupEventListener = (openButton, popupNode, callBack) => {
+  const profileCloseButton = popupNode.querySelector(".popup__close");
   openButton.addEventListener("click", () => {
     handleOpenModal(popupNode);
     if (callBack) {
       callBack();
     }
   });
-  closeButton.addEventListener("click", () => handleCloseModal(popupNode));
+  profileCloseButton.addEventListener("click", () => handleCloseModal(popupNode));
   popupNode.addEventListener("click", () => handleCloseModal(popupNode));
-  window.addEventListener(
-    "keydown",
-    (evt) => evt.key === "Escape" && handleCloseModal(popupNode)
-  );
 
   popupNode
     .querySelector(".popup__content")
@@ -40,7 +45,7 @@ export const handleLikeButon = (likeButtonNode) => {
   likeButtonNode.classList.toggle("card__like-button_is-active");
 };
 
-export const likeButtonEventListener = (cardNode) => {
+export const setLikeButtonEventListener = (cardNode) => {
   const likeButtonNode = cardNode.querySelector(".card__like-button");
   likeButtonNode.addEventListener("click", () =>
     handleLikeButon(likeButtonNode)
@@ -49,19 +54,21 @@ export const likeButtonEventListener = (cardNode) => {
 
 
 
+const popupEdit = document.querySelector(".popup_type_edit");
 // изменение данных профиля
 export function handleEditProfile() {
-  const popupEdit = document.querySelector(".popup_type_edit");
   // Находим форму в DOM
-  const formElement = popupEdit.querySelector(".popup__form"); // Воспользуйтесь методом popup_type_edit.querySelector()
+  const profileFormElement = popupEdit.querySelector(".popup__form"); // Воспользуйтесь методом popup_type_edit.querySelector()
   // Находим поля формы в DOM
-  const nameInput = formElement.querySelector(".popup__input_type_name"); // Воспользуйтесь инструментом .querySelector() popup__input_type_name
-  const jobInput = formElement.querySelector(".popup__input_type_description"); // Воспользуйтесь инструментом .querySelector() popup__input_type_description
-
+  const nameInput = profileFormElement.querySelector(".popup__input_type_name"); // Воспользуйтесь инструментом .querySelector() popup__input_type_name
+  const jobInput = profileFormElement.querySelector(
+    ".popup__input_type_description"
+  ); // Воспользуйтесь инструментом .querySelector() popup__input_type_description
+  const profTitle = document.querySelector(".profile__title");
+  const profDesc = document.querySelector(".profile__description");
   // Обработчик «отправки» формы, хотя пока
   // она никуда отправляться не будет
-
-  function handleFormSubmit(evt) {
+  function handleProfileFormSubmit(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Так мы можем определить свою логику отправки.
     // О том, как это делать, расскажем позже.
@@ -69,55 +76,53 @@ export function handleEditProfile() {
     // Получите значение полей jobInput и nameInput из свойства value
     const name = nameInput.value;
     const job = jobInput.value;
-
     // Выберите элементы, куда должны быть вставлены значения полей
-    const profTitle = document.querySelector(".profile__title");
-    const profDesc = document.querySelector(".profile__description");
 
     // Вставьте новые значения с помощью textContent
     profTitle.textContent = name;
     profDesc.textContent = job;
     handleCloseModal(popupEdit);
-    nameInput.value = '';
-    jobInput.value = '';
+    // nameInput.value = '';
+    // jobInput.value = '';
   }
 
   // Прикрепляем обработчик к форме:
   // он будет следить за событием “submit” - «отправка»
-  formElement.addEventListener("submit", handleFormSubmit);
+  profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 }
 
-
+const popupNewCard = document.querySelector(".popup_type_new-card");
 // добавление новой карточки
 export function handleAddCard(createCard, deleteCard, placesList) {
-  const popupNewCard = document.querySelector(".popup_type_new-card");
   // Находим форму в DOM
-  const formElement = popupNewCard.querySelector(".popup__form"); // Воспользуйтесь методом popup_type_edit.querySelector()
+  const newCardFormElement = popupNewCard.querySelector(".popup__form"); // Воспользуйтесь методом popup_type_edit.querySelector()
   // Находим поля формы в DOM
-  const cardNameInput = formElement.querySelector(".popup__input_type_card-name"); // Воспользуйтесь инструментом .querySelector() popup__input_type_name
-  const cardUrlInput = formElement.querySelector(".popup__input_type_url"); // Воспользуйтесь инструментом .querySelector() popup__input_type_description
-
+  const cardNameInput = newCardFormElement.querySelector(
+    ".popup__input_type_card-name"
+  ); // Воспользуйтесь инструментом .querySelector() popup__input_type_name
+  const cardUrlInput = newCardFormElement.querySelector(
+    ".popup__input_type_url"
+  ); // Воспользуйтесь инструментом .querySelector() popup__input_type_description
   // Обработчик «отправки» формы, хотя пока
   // она никуда отправляться не будет
 
-  function handleFormSubmit(evt) {
+  function handleFormNewCardSubmit(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Так мы можем определить свою логику отправки.
     // О том, как это делать, расскажем позже.
 
     const card = {
       name: cardNameInput.value,
-      link: cardUrlInput.value
-    }
+      link: cardUrlInput.value,
+    };
 
     const cardItem = createCard(card, deleteCard);
     placesList.prepend(cardItem);
     handleCloseModal(popupNewCard);
-    cardNameInput.value = '';
-    cardUrlInput.value = '';
+    cardNameInput.value = "";
+    cardUrlInput.value = "";
   }
-
   // Прикрепляем обработчик к форме:
   // он будет следить за событием “submit” - «отправка»
-  formElement.addEventListener("submit", handleFormSubmit);
+  newCardFormElement.addEventListener("submit", handleFormNewCardSubmit);
 }

@@ -1,13 +1,7 @@
 import '../pages/index.css';
 import {initialCards} from "./cards";
-import {popupEventListener, openImageModal, handleLikeButon, handleDislikeButon, likeButtonEventListener, handleEditProfile, handleAddCard} from './utils';
+import {setPopupEventListener, openImageModal, handleLikeButon, handleDislikeButon, setLikeButtonEventListener, handleEditProfile, handleAddCard} from './modal';
 import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpenImage, allLikeButtons} from './variable';
-
-
-
-const openModalWindow = (modalWindow) => {
-  modalWindow.classList.add("popup_is-opened");
-};
 
 
 // @todo: Темплейт карточки
@@ -17,7 +11,7 @@ const template = document.querySelector("#card-template").content;
 const placesList = document.querySelector(".places__list");
 
 // @todo: Функция создания карточки
-function createCard(item, deleteCard) {
+function createCard(item, {deleteCard, likeCard, handleImageClick}) {
   const cardElement = template.querySelector('.card').cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
   const cardImage = cardElement.querySelector('.card__image');
@@ -31,16 +25,10 @@ function createCard(item, deleteCard) {
   //   }
   // );
   const openModal = () => openImageModal(cardElement, modalOpenImage);
-  popupEventListener(cardImage, modalOpenImage, openModal);
-  likeButtonEventListener(cardElement);
+  handleImageClick(cardImage, modalOpenImage, openModal);
+  likeCard(cardElement);
   return cardElement;
 }
-
-// @todo: Вывести карточки на страницу
-initialCards.forEach((item) => {
-  const cardItem = createCard(item, deleteCard);
-  placesList.append(cardItem);
-});
 
 // @todo: Функция удаления карточки
 function deleteCard(cardElement) {
@@ -48,12 +36,23 @@ function deleteCard(cardElement) {
   deletedCard.remove();
 }
 
+// @todo: Вывести карточки на страницу
+initialCards.forEach((item) => {
+  const cardItem = createCard(item, {deleteCard, likeCard: setLikeButtonEventListener, handleImageClick: setPopupEventListener});
+  placesList.append(cardItem);
+});
 
 
 
-popupEventListener(buttonPlus, modalNewCard);
-popupEventListener(buttonEditProfile, modalEditProfile);
+
+
+setPopupEventListener(buttonPlus, modalNewCard);
+setPopupEventListener(buttonEditProfile, modalEditProfile);
 handleEditProfile();
 handleAddCard(createCard, deleteCard, placesList);
+
+
+
+
 
 
