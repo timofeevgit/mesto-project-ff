@@ -32,7 +32,7 @@ export const initialCards = [
 const template = document.querySelector("#card-template").content;
 
 // @todo: Функция создания карточки
-export function createCard(item, {deleteCard, likeCard}) {
+export function createCard(item, {deleteCard, likeCard, openImageCard}) {
   const cardElement = template.querySelector('.card').cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
   const cardImage = cardElement.querySelector('.card__image');
@@ -41,9 +41,17 @@ export function createCard(item, {deleteCard, likeCard}) {
   cardTitle.textContent = item.name;
   cardImage.src = item.link;
   cardDeleteButton.addEventListener('click', deleteCard);
-  const openModal = () => openImageModal(item);
+
+  const openModal = () => openImageCard(item);
+  // На счет setPopupEventListener я не очень понял, и мои друзья разработчики и преподаватели практикума не смогли объяснить/понять, что нужно тут сделать.
+  // Я исправил лайк - удалил отдельную функцию, нашел ноду и повесил обработчик в createCard, и вроде как преподаватели говорят, что "всё, больше ничего не надо".
+  // Из initialCards в index.js удалил передачу.
   setPopupEventListener(cardImage, modalOpenImage, openModal);
-  setLikeButtonEventListener(cardElement, likeCard);
+
+
+  const likeButtonNode = cardElement.querySelector(".card__like-button");
+  likeButtonNode.addEventListener("click", () => likeCard(likeButtonNode));
+  handleLikeButon(cardElement, likeCard);
   return cardElement;
 }
 
@@ -53,14 +61,6 @@ export function deleteCard(cardElement) {
   const deletedCard = cardElement.target.closest('.card');
   deletedCard.remove();
 }
-
-export const setLikeButtonEventListener = (cardNode, likeCard) => {
-  const likeButtonNode = cardNode.querySelector(".card__like-button");
-  likeButtonNode.addEventListener("click", () => likeCard(likeButtonNode));
-};
-
-
-
 
 export const handleLikeButon = (likeButtonNode) => {
   likeButtonNode.classList.toggle("card__like-button_is-active");

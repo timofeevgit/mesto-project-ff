@@ -82,7 +82,7 @@ export function handleAddCard(createCard, deleteCard, placesList) {
       link: cardUrlInput.value,
     };
 
-    const cardItem = createCard(card, {deleteCard, likeCard: handleLikeButon});
+    const cardItem = createCard(card, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal});
     placesList.prepend(cardItem);
     handleCloseModal(popupNewCard);
     cardNameInput.value = "";

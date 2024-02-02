@@ -8,11 +8,9 @@ import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpen
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach((item) => {
-  const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon});
+  const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal});
   placesList.append(cardItem);
 });
-
-
 
 
 
