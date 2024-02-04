@@ -1,5 +1,5 @@
 import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpenImage, allLikeButtons, placesList} from './variable';
-import {setPopupEventListener, openImageModal, handleDislikeButon, handleEditProfile, handleAddCard} from './modal';
+import {setPopupOpenEventListener, openImageModal, handleDislikeButon, handleEditProfile, handleAddCard} from './modal';
 
 export const initialCards = [
     {
@@ -43,10 +43,8 @@ export function createCard(item, {deleteCard, likeCard, openImageCard}) {
   cardDeleteButton.addEventListener('click', deleteCard);
 
   const openModal = () => openImageCard(item);
-  // На счет setPopupEventListener я не очень понял, и мои друзья разработчики и преподаватели практикума не смогли объяснить/понять, что нужно тут сделать.
-  // Я исправил лайк - удалил отдельную функцию, нашел ноду и повесил обработчик в createCard, и вроде как преподаватели говорят, что "всё, больше ничего не надо".
-  // Из initialCards в index.js удалил передачу.
-  setPopupEventListener(cardImage, modalOpenImage, openModal);
+  // Исправил функцию, переименовал. Теперь она отрабатывает только на открытие карточки
+  setPopupOpenEventListener(cardImage, modalOpenImage, openModal);
 
 
   const likeButtonNode = cardElement.querySelector(".card__like-button");

@@ -17,20 +17,26 @@ function handleCloseModalByEsc(evt) {
   };
 };
 
-export const setPopupEventListener = (openButton, popupNode, callBack) => {
+export const setPopupCloseEventListener = (popupNode) => {
   const profileCloseButton = popupNode.querySelector(".popup__close");
+  profileCloseButton.addEventListener("click", () => handleCloseModal(popupNode));
+  popupNode.addEventListener("click", () => handleCloseModal(popupNode));
+
+  popupNode
+  .querySelector(".popup__content")
+  .addEventListener("click", (evt) => evt.stopPropagation());
+}
+
+export const setPopupOpenEventListener = (openButton, popupNode, callBack) => {
   openButton.addEventListener("click", () => {
     handleOpenModal(popupNode);
     if (callBack) {
       callBack();
     }
   });
-  profileCloseButton.addEventListener("click", () => handleCloseModal(popupNode));
-  popupNode.addEventListener("click", () => handleCloseModal(popupNode));
 
-  popupNode
-    .querySelector(".popup__content")
-    .addEventListener("click", (evt) => evt.stopPropagation());
+
+
 };
 
 
