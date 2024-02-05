@@ -34,9 +34,6 @@ export const setPopupOpenEventListener = (openButton, popupNode, callBack) => {
       callBack();
     }
   });
-
-
-
 };
 
 

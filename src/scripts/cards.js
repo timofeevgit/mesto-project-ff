@@ -28,10 +28,10 @@ export const initialCards = [
     }
 ];
 
-// @todo: Темплейт карточки
+// Нашли темплейт карточки с контентом, который потом будет добавлять в places__list
 const template = document.querySelector("#card-template").content;
 
-// @todo: Функция создания карточки
+// Создаем карточки с наполнением внутри JS. Ищем все ноды, задаем атрибуты
 export function createCard(item, {deleteCard, likeCard, openImageCard}) {
   const cardElement = template.querySelector('.card').cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
@@ -43,13 +43,11 @@ export function createCard(item, {deleteCard, likeCard, openImageCard}) {
   cardDeleteButton.addEventListener('click', deleteCard);
 
   const openModal = () => openImageCard(item);
-  // Исправил функцию, переименовал. Теперь она отрабатывает только на открытие карточки
   setPopupOpenEventListener(cardImage, modalOpenImage, openModal);
 
 
   const likeButtonNode = cardElement.querySelector(".card__like-button");
   likeButtonNode.addEventListener("click", () => likeCard(likeButtonNode));
-  handleLikeButon(cardElement, likeCard);
   return cardElement;
 }
 

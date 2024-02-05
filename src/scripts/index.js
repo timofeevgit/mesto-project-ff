@@ -6,6 +6,9 @@ import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpen
 
 
 
+
+
+
 // @todo: Вывести карточки на страницу
 initialCards.forEach((item) => {
   const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal});
@@ -18,11 +21,9 @@ setPopupCloseEventListener(modalNewCard)
 setPopupCloseEventListener(modalEditProfile)
 setPopupCloseEventListener(modalOpenImage)
 setPopupOpenEventListener(buttonPlus, modalNewCard);
-setPopupOpenEventListener(buttonEditProfile, modalEditProfile);
+setPopupOpenEventListener(buttonEditProfile, modalEditProfile, handleEditProfile);
 handleEditProfile();
 handleAddCard(createCard, deleteCard, placesList);
-
-
 
 
 
