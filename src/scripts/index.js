@@ -22,7 +22,7 @@ setPopupCloseEventListener(modalEditProfile)
 setPopupCloseEventListener(modalOpenImage)
 setPopupOpenEventListener(buttonPlus, modalNewCard);
 setPopupOpenEventListener(buttonEditProfile, modalEditProfile, fillProfileInputs);
-// handleEditProfile();
+handleEditProfile();
 handleAddCard(createCard, deleteCard, placesList);
 
 

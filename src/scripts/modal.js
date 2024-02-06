@@ -61,7 +61,7 @@ export function fillProfileInputs() {
   jobInput.value = profDesc.textContent;
 }
 
-// export function handleEditProfile() {
+export function handleEditProfile() { // God pls let it be the last itteration :D
   function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     const name = nameInput.value;
@@ -71,7 +71,7 @@ export function fillProfileInputs() {
     handleCloseModal(popupEdit);
   }
   profileFormElement.addEventListener("submit", handleProfileFormSubmit);
-// }
+}
 
 
 // добавление новой карточки
