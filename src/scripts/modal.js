@@ -50,15 +50,18 @@ export const openImageModal = (item) => {
 
 // Изменение данных профиля
 const popupEdit = document.querySelector(".popup_type_edit");
-export function handleEditProfile() {
-  const profileFormElement = popupEdit.querySelector(".popup__form");
-  const nameInput = profileFormElement.querySelector(".popup__input_type_name");
-  const jobInput = profileFormElement.querySelector(".popup__input_type_description");
-  const profTitle = document.querySelector(".profile__title");
-  const profDesc = document.querySelector(".profile__description");
+const profileFormElement = popupEdit.querySelector(".popup__form");
+const nameInput = profileFormElement.querySelector(".popup__input_type_name");
+const jobInput = profileFormElement.querySelector(".popup__input_type_description");
+const profTitle = document.querySelector(".profile__title");
+const profDesc = document.querySelector(".profile__description");
+
+export function fillProfileInputs() {
   nameInput.value= profTitle.textContent;
   jobInput.value = profDesc.textContent;
+}
 
+// export function handleEditProfile() {
   function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     const name = nameInput.value;
@@ -68,7 +71,7 @@ export function handleEditProfile() {
     handleCloseModal(popupEdit);
   }
   profileFormElement.addEventListener("submit", handleProfileFormSubmit);
-}
+// }
 
 
 // добавление новой карточки

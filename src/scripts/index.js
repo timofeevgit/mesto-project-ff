@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import {initialCards, createCard, deleteCard, handleLikeButon, setLikeButtonEventListener} from "./cards";
-import {setPopupOpenEventListener, openImageModal, handleDislikeButon, handleEditProfile, handleAddCard, setPopupCloseEventListener} from './modal';
+import {setPopupOpenEventListener, openImageModal, handleDislikeButon, handleEditProfile, handleAddCard, setPopupCloseEventListener, fillProfileInputs} from './modal';
 import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpenImage, allLikeButtons, placesList} from './variable';
 
 
@@ -21,8 +21,8 @@ setPopupCloseEventListener(modalNewCard)
 setPopupCloseEventListener(modalEditProfile)
 setPopupCloseEventListener(modalOpenImage)
 setPopupOpenEventListener(buttonPlus, modalNewCard);
-setPopupOpenEventListener(buttonEditProfile, modalEditProfile, handleEditProfile);
-handleEditProfile();
+setPopupOpenEventListener(buttonEditProfile, modalEditProfile, fillProfileInputs);
+// handleEditProfile();
 handleAddCard(createCard, deleteCard, placesList);
 
 
