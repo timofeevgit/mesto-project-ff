@@ -1,5 +1,5 @@
-import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpenImage, allLikeButtons, placesList} from './variable';
-import {setPopupOpenEventListener, openImageModal, handleDislikeButon, handleEditProfile, handleAddCard} from './modal';
+import {modalOpenImage} from './variable';
+import {setPopupOpenEventListener} from './modal';
 
 export const initialCards = [
     {
@@ -28,10 +28,11 @@ export const initialCards = [
     }
 ];
 
+
 // Нашли темплейт карточки с контентом, который потом будет добавлять в places__list
 const template = document.querySelector("#card-template").content;
 
-// Создаем карточки с наполнением внутри JS. Ищем все ноды, задаем атрибуты
+// Создаем карточку с наполнением внутри JS. Ищем все ноды, задаем атрибуты
 export function createCard(item, {deleteCard, likeCard, openImageCard}) {
   const cardElement = template.querySelector('.card').cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
@@ -52,15 +53,14 @@ export function createCard(item, {deleteCard, likeCard, openImageCard}) {
 }
 
 
-// @todo: Функция удаления карточки
+// Функция удаления карточки, передаваемая в createCard как аргумент
 export function deleteCard(cardElement) {
   const deletedCard = cardElement.target.closest('.card');
   deletedCard.remove();
 }
 
+// функция переключает кнопку лайка
 export const handleLikeButon = (likeButtonNode) => {
   likeButtonNode.classList.toggle("card__like-button_is-active");
 };
-
-
 

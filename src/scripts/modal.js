@@ -1,15 +1,18 @@
-import {handleLikeButon, setLikeButtonEventListener} from "./cards";
+import {handleLikeButon} from "./cards";
 
+// Функция открытия любых модальных окон, попадаемых в неё в качестве аргумента + обработчик закрытия моадлки по esc
 export const handleOpenModal = (modalWindow) => {
   modalWindow.classList.add("popup_is-opened");
   document.addEventListener("keydown", handleCloseModalByEsc);
 };
 
+// Функция закрытия любых модальных окон, попадаемых в неё в качестве аргумента + обработчик закрытия моадлки по esc
 export const handleCloseModal = (modalWindow) => {
   modalWindow.classList.remove("popup_is-opened");
   document.removeEventListener('keydown', handleCloseModalByEsc);
 };
 
+// Функция закрытия по esc
 function handleCloseModalByEsc(evt) {
   if (evt.key === "Escape") {
     const openedPopup = document.querySelector('.popup_is-opened');
@@ -17,16 +20,18 @@ function handleCloseModalByEsc(evt) {
   };
 };
 
+// Функция слушатель закрытия модальных окон нажатием на крестик, нажатием на оверлей. Принимает ноду для закрытия
 export const setPopupCloseEventListener = (popupNode) => {
-  const profileCloseButton = popupNode.querySelector(".popup__close");
-  profileCloseButton.addEventListener("click", () => handleCloseModal(popupNode));
-  popupNode.addEventListener("click", () => handleCloseModal(popupNode));
+  const closeButton = popupNode.querySelector(".popup__close");
+  closeButton.addEventListener("click", () => handleCloseModal(popupNode));
 
   popupNode
   .querySelector(".popup__content")
   .addEventListener("click", (evt) => evt.stopPropagation());
+  popupNode.addEventListener("click", () => handleCloseModal(popupNode));
 }
 
+// Функция слушатель открытия модальных окон, принимающая кнопку модального окна, ноду модального окна и если есть колбэк - вызывающая колбэк.
 export const setPopupOpenEventListener = (openButton, popupNode, callBack) => {
   openButton.addEventListener("click", () => {
     handleOpenModal(popupNode);
@@ -37,9 +42,11 @@ export const setPopupOpenEventListener = (openButton, popupNode, callBack) => {
 };
 
 
+// Модалка изображения
 const imageModal = document.querySelector(".popup__image");
+// Описание изображения в модалке изображения
 const imageModalCaption = document.querySelector(".popup__caption");
-
+// Функция слушатель открытия модальных окон изображений
 export const openImageModal = (item) => {
   imageModal.src = item.link;
   imageModal.alt = item.name;
@@ -56,12 +63,14 @@ const jobInput = profileFormElement.querySelector(".popup__input_type_descriptio
 const profTitle = document.querySelector(".profile__title");
 const profDesc = document.querySelector(".profile__description");
 
+// поля в попапе редактирования профиля будут иметь тот текст, который отображается в самом профиле. Эту функцию вызываем как колбэк в setPopupOpenEventListener
 export function fillProfileInputs() {
-  nameInput.value= profTitle.textContent;
+  nameInput.value = profTitle.textContent;
   jobInput.value = profDesc.textContent;
 }
 
-export function handleEditProfile() { // God pls let it be the last itteration :D
+// редактируем профиль: сбрасываем дефолтное поведение, заполняем значения полей, вызываем функцию закрытия попапа, навешиваме обработчик сабмита
+export function handleEditProfile() {
   function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     const name = nameInput.value;
