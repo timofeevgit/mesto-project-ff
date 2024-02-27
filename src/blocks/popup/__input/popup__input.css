@@ -10,12 +10,13 @@
   margin-bottom: 10px;
 }
 
-.form__input-error {
+.popup__input_type_error {
   border-bottom-color: red;
 }
 
-.form__input-error_active {
+.popup__error_visible {
   display: block;
+  min-height: 56px;
   color: red;
 }
 

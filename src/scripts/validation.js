@@ -1,38 +1,40 @@
-// import {enableValidation} from './index.js'
-
-
-
-const formElement = document.querySelector('.popup__form');
-const inputElement = formElement.querySelector('.popup__input');
-
-
-const inputElementEvt = inputElement.addEventListener('input', function (evt) {
-  console.log(evt.target.validity.valid);
-});
-
+export const validationSettings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
 
 // Функция, показывающая ошибку
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, errorMessage, validationSettings) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('form__input-error');
+  inputElement.classList.add(validationSettings.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__input-error_active');
+  errorElement.classList.add(validationSettings.errorClass);
 }
 
 // Функция, скрывающая ошибку
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, validationSettings) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('form__input-error');
-  errorElement.classList.remove('form__input-error_active');
+  inputElement.classList.remove(validationSettings.inputErrorClass);
+  errorElement.classList.remove(validationSettings.errorClass);
   errorElement.textContent = '';
 }
 
 // Функция, проверяющая на ошибку
-const isValid = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+const isValid = (formElement, inputElement, validationSettings) => {
+  if (inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {
-    hideInputError(formElement, inputElement);
+    inputElement.setCustomValidity("");
+  }
+
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage, validationSettings);
+  } else {
+    hideInputError(formElement, inputElement, validationSettings);
   }
 }
 
@@ -42,50 +44,52 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-const toggleButtonState = (inputList, buttonElement) => {
+const disabledButton = (buttonElement, validationSettings) => {
+  buttonElement.classList.add(validationSettings.inactiveButtonClass);
+  buttonElement.disabled = true;
+}
+
+const toggleButtonState = (inputList, buttonElement, validationSettings) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.disabled = true;
-    buttonElement.classList.add('form__submit_inactive');
+    disabledButton(buttonElement, validationSettings);
   } else {
     buttonElement.disabled = false;
-    buttonElement.classList.remove('form__submit_inactive');
+    buttonElement.classList.remove(validationSettings.inactiveButtonClass);
   }
 };
 
 
 // Функция, навешивающая обработчики на массив инпутов
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-  const buttonElement = formElement.querySelector('.popup__button');
-  toggleButtonState(inputList, buttonElement);
+const setEventListeners = (formElement, validationSettings) => {
+  const inputList = Array.from(formElement.querySelectorAll(validationSettings.inputSelector));
+  const buttonElement = formElement.querySelector(validationSettings.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement, validationSettings);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      isValid(formElement, inputElement)
-      toggleButtonState(inputList, buttonElement);
+      isValid(formElement, inputElement, validationSettings)
+      toggleButtonState(inputList, buttonElement, validationSettings);
     });
   });
 };
 
 
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__form'))
+export const enableValidation = (validationSettings) => {
+  const formList = Array.from(document.querySelectorAll(validationSettings.formSelector))
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-    setEventListeners(formElement);
+    setEventListeners(formElement, validationSettings);
   });
 };
-// enableValidation();
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-});
+export const clearValidation = (formElement, validationSettings) => {
+  const inputList = Array.from(formElement.querySelectorAll(validationSettings.inputSelector));
+  const buttonElement = formElement.querySelector(validationSettings.submitButtonSelector);
+  inputList.forEach((inputElement, validationSettings) => {
+    hideInputError(formElement, inputElement, validationSettings);
+  });
+    disabledButton(buttonElement, validationSettings);
+};
 
 
-// todo: min-height, чтобы верстка не прыгала, кнопка инактив после добавления новой карточки, регулярки для сообщений ошибок, сброс сообщения ошибки при закрытии попапа,требования к коду валидации

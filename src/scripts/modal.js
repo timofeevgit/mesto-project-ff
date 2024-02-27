@@ -1,4 +1,5 @@
 import {handleLikeButon} from "./cards";
+import {clearValidation, validationSettings} from './validation';
 
 // Функция открытия любых модальных окон, попадаемых в неё в качестве аргумента + обработчик закрытия моадлки по esc
 export const handleOpenModal = (modalWindow) => {
@@ -35,6 +36,8 @@ export const setPopupCloseEventListener = (popupNode) => {
 export const setPopupOpenEventListener = (openButton, popupNode, callBack) => {
   openButton.addEventListener("click", () => {
     handleOpenModal(popupNode);
+    // clearValidation(popupEdit, validationSettings);
+    // clearValidation(popupNewCard, validationSettings);
     if (callBack) {
       callBack();
     }

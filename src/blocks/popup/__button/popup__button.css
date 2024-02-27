@@ -27,13 +27,13 @@
 }
 
 
-.form__submit_inactive {
+.popup__button_disabled {
   color: gray;
   background: #fff;
   border: 1px solid gray;
 }
 
-.form__submit_inactive:hover {
+.popup__button_disabled:hover {
   cursor: default;
   background: #fff;
 }

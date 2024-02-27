@@ -1,8 +1,8 @@
 import '../pages/index.css';
 import {initialCards, createCard, deleteCard, handleLikeButon} from "./cards";
-import {setPopupOpenEventListener, openImageModal, handleEditProfile, handleAddCard, setPopupCloseEventListener, fillProfileInputs} from './modal';
+import {handleOpenModal, setPopupOpenEventListener, openImageModal, handleEditProfile, handleAddCard, setPopupCloseEventListener, fillProfileInputs} from './modal';
 import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpenImage, placesList} from './variable';
-import {popupForm, popupFormInput, popupFormInputEvt} from './validation';
+import {enableValidation, validationSettings, clearValidation} from './validation';
 
 
 // Выводим карточки на экран пользователя
@@ -11,6 +11,16 @@ initialCards.forEach((item) => {
   placesList.append(cardItem);
 });
 
+
+const openPopupEdit = function () {
+  clearValidation(modalEditProfile, validationSettings);
+};
+buttonEditProfile.addEventListener('click', openPopupEdit);
+
+const openPopupAddCard = function () {
+  clearValidation(modalNewCard, validationSettings);
+};
+buttonPlus.addEventListener('click', openPopupAddCard);
 
 
 // Вызываем все написанные ранее функции с предназначенными для них аргументами.
@@ -21,7 +31,8 @@ setPopupOpenEventListener(buttonPlus, modalNewCard);
 setPopupOpenEventListener(buttonEditProfile, modalEditProfile, fillProfileInputs);
 handleEditProfile();
 handleAddCard(createCard, deleteCard, placesList);
-
+// вкл/выкл валидацию.
+enableValidation(validationSettings);
 
 
 
