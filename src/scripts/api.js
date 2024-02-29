@@ -34,16 +34,20 @@ export const getInitialCards = () => {
 export const patchUserData = (data) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
-    headers: {
-      authorization: '70016aa2-461b-4178-865f-71ad7edfeeae',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: 'Marie Skłodowska Curie',
-      about: 'Physicist and Chemist'
-    })
+    headers: config.headers,
+    body: JSON.stringify(data)
   }).then(checkResponse);
 };
+
+// отправляем новую карточку на сервер
+export const postNewCard = (data) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify(data)
+  }).then(checkResponse);
+};
+
 
 
 // что такое then(res). res.json(). Promise.reject. Promise.all?

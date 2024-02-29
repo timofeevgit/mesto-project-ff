@@ -36,9 +36,3 @@ handleEditProfile();
 handleAddCard(createCard, deleteCard, placesList);
 // вкл/выкл валидацию.
 enableValidation(validationSettings);
-
-
-// api job
-getUserData();
-getInitialCards();
-patchUserData();

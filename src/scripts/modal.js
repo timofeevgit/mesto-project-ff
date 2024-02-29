@@ -1,5 +1,6 @@
 import {handleLikeButon} from "./cards";
 import {clearValidation, validationSettings} from './validation';
+import {patchUserData, postNewCard} from './api';
 
 // Функция открытия любых модальных окон, попадаемых в неё в качестве аргумента + обработчик закрытия моадлки по esc
 export const handleOpenModal = (modalWindow) => {
@@ -72,14 +73,19 @@ export function fillProfileInputs() {
   jobInput.value = profDesc.textContent;
 }
 
+
+
 // редактируем профиль: сбрасываем дефолтное поведение, заполняем значения полей, вызываем функцию закрытия попапа, навешиваме обработчик сабмита
 export function handleEditProfile() {
   function handleProfileFormSubmit(evt) {
+    console.log('anus3000')
     evt.preventDefault();
     const name = nameInput.value;
     const job = jobInput.value;
     profTitle.textContent = name;
     profDesc.textContent = job;
+    // отправляем данные профиля на сервер
+    patchUserData({name: name, about: job});
     handleCloseModal(popupEdit);
   }
   profileFormElement.addEventListener("submit", handleProfileFormSubmit);
@@ -101,6 +107,8 @@ export function handleAddCard(createCard, deleteCard, placesList) {
     };
 
     const cardItem = createCard(card, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal});
+    // отправляем карточку на свервер
+    postNewCard(card);
     placesList.prepend(cardItem);
     handleCloseModal(popupNewCard);
     cardNameInput.value = "";

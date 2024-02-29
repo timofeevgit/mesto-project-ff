@@ -49,6 +49,7 @@ export function createCard(item, {deleteCard, likeCard, openImageCard}) {
 
   const likeButtonNode = cardElement.querySelector(".card__like-button");
   likeButtonNode.addEventListener("click", () => likeCard(likeButtonNode));
+
   return cardElement;
 }
 
