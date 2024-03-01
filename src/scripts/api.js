@@ -40,11 +40,11 @@ export const patchUserData = (data) => {
 };
 
 // отправляем новую карточку на сервер
-export const postNewCard = (data) => {
+export const postNewCard = (name, link) => {
   return fetch(`${config.baseUrl}/cards`, {
     method: 'POST',
     headers: config.headers,
-    body: JSON.stringify(data)
+    body: JSON.stringify(name, link)
   }).then(checkResponse);
 };
 

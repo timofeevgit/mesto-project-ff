@@ -33,7 +33,7 @@ export const initialCards = [
 const template = document.querySelector("#card-template").content;
 
 // Создаем карточку с наполнением внутри JS. Ищем все ноды, задаем атрибуты
-export function createCard(item, {deleteCard, likeCard, openImageCard}) {
+export function createCard(item, {deleteCard, likeCard, openImageCard, showIconDelete = true}) {
   const cardElement = template.querySelector('.card').cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
   const cardImage = cardElement.querySelector('.card__image');
@@ -42,6 +42,9 @@ export function createCard(item, {deleteCard, likeCard, openImageCard}) {
   cardTitle.textContent = item.name;
   cardImage.src = item.link;
   cardDeleteButton.addEventListener('click', deleteCard);
+  if (!showIconDelete) {
+    cardDeleteButton.classList.add('card__delete-button-hidden');
+  }
 
   const openModal = () => openImageCard(item);
   setPopupOpenEventListener(cardImage, modalOpenImage, openModal);

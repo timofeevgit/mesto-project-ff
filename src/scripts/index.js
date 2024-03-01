@@ -6,12 +6,22 @@ import {enableValidation, validationSettings, clearValidation} from './validatio
 import {getInitialCards, getUserData, patchUserData} from './api';
 
 
+const renderInitialCards = async () => {
+  const initialCards = await getInitialCards();
+  initialCards.forEach((item) => {
+    const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal, showIconDelete: false});
+    placesList.append(cardItem);
+  });
+}
+await renderInitialCards()
+
 
 // Выводим карточки на экран
-initialCards.forEach((item) => {
-  const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal});
-  placesList.append(cardItem);
-});
+// initialCards.forEach((item) => {
+//   const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal});
+//   placesList.append(cardItem);
+// });
+
 
 // очистка валидации ред. профиля
 const openPopupEdit = function () {
