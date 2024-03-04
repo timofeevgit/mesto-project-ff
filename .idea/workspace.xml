@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d9bbf11-b3a0-4a00-86ec-fc6927cac1b9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/blocks/profile/__image/profile__image.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/blocks/profile/__image/profile__image.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scripts/cards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/cards.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scripts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scripts/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/modal.js" afterDir="false" />
@@ -18,9 +21,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2c85XxWrbtGDJFTtyskiuLM8kd7" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -28,6 +31,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Node.js.index.js.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/dev/mesto-project-ff",
@@ -44,6 +48,7 @@
       <option name="presentableId" value="Default" />
       <updated>1707480409318</updated>
       <workItem from="1707480411275" duration="97000" />
+      <workItem from="1709571351727" duration="95000" />
     </task>
     <servers />
   </component>

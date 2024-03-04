@@ -49,6 +49,24 @@ export const postNewCard = (name, link) => {
 };
 
 
+export const removeCard = (id) => {
+  return fetch(`${config.baseUrl}/cards/${id}`, {
+    method: 'DELETE',
+    headers: config.headers,
+  }).then(checkResponse);
+};
 
-// что такое then(res). res.json(). Promise.reject. Promise.all?
-// что происходит с patchUserData и как обнвоить данные на странице?
+export const addLikeCard = (id, isLiked) => {
+  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
+    method: isLiked ? 'DELETE' : 'PUT',
+    headers: config.headers,
+  }).then(checkResponse);
+};
+
+export const updateAvatar = (data) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify(data),
+  }).then(checkResponse);
+};

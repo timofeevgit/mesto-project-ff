@@ -1,6 +1,7 @@
 import {handleLikeButon} from "./cards";
 import {clearValidation, validationSettings} from './validation';
-import {patchUserData, postNewCard} from './api';
+import {patchUserData, postNewCard, updateAvatar} from './api';
+import {userId} from './index'
 
 // Функция открытия любых модальных окон, попадаемых в неё в качестве аргумента + обработчик закрытия моадлки по esc
 export const handleOpenModal = (modalWindow) => {
@@ -37,8 +38,9 @@ export const setPopupCloseEventListener = (popupNode) => {
 export const setPopupOpenEventListener = (openButton, popupNode, callBack) => {
   openButton.addEventListener("click", () => {
     handleOpenModal(popupNode);
-    // clearValidation(popupEdit, validationSettings);
-    // clearValidation(popupNewCard, validationSettings);
+    clearValidation(popupEdit, validationSettings);
+    clearValidation(popupNewCard, validationSettings);
+    clearValidation(avatarPopup, validationSettings)
     if (callBack) {
       callBack();
     }
@@ -64,8 +66,8 @@ const popupEdit = document.querySelector(".popup_type_edit");
 const profileFormElement = popupEdit.querySelector(".popup__form");
 const nameInput = profileFormElement.querySelector(".popup__input_type_name");
 const jobInput = profileFormElement.querySelector(".popup__input_type_description");
-const profTitle = document.querySelector(".profile__title");
-const profDesc = document.querySelector(".profile__description");
+export const profTitle = document.querySelector(".profile__title");
+export const profDesc = document.querySelector(".profile__description");
 
 // поля в попапе редактирования профиля будут иметь тот текст, который отображается в самом профиле. Эту функцию вызываем как колбэк в setPopupOpenEventListener
 export function fillProfileInputs() {
@@ -73,20 +75,29 @@ export function fillProfileInputs() {
   jobInput.value = profDesc.textContent;
 }
 
-
+function renderLoading(saveButton, status) {
+  saveButton.textContent = status;
+}
 
 // редактируем профиль: сбрасываем дефолтное поведение, заполняем значения полей, вызываем функцию закрытия попапа, навешиваме обработчик сабмита
 export function handleEditProfile() {
   function handleProfileFormSubmit(evt) {
-    console.log('anus3000')
+    renderLoading(evt.submitter, 'Сохранение...');
     evt.preventDefault();
+    // отправляем данные профиля на сервер
+    patchUserData({name: nameInput.value, about: jobInput.value})
+    .then(() => {
     const name = nameInput.value;
     const job = jobInput.value;
     profTitle.textContent = name;
     profDesc.textContent = job;
-    // отправляем данные профиля на сервер
-    patchUserData({name: name, about: job});
+    evt.target.reset();
     handleCloseModal(popupEdit);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => renderLoading(evt.submitter, 'Сохранить'));
   }
   profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 }
@@ -100,19 +111,51 @@ export function handleAddCard(createCard, deleteCard, placesList) {
   const cardUrlInput = newCardFormElement.querySelector(".popup__input_type_url");
 
   function handleFormNewCardSubmit(evt) {
+    renderLoading(evt.submitter, 'Сохранение...');
     evt.preventDefault();
     const card = {
       name: cardNameInput.value,
       link: cardUrlInput.value,
     };
-
-    const cardItem = createCard(card, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal});
     // отправляем карточку на свервер
-    postNewCard(card);
+    postNewCard(card)
+    .then((card) => {
+    const cardItem = createCard(card, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal, userId});
     placesList.prepend(cardItem);
     handleCloseModal(popupNewCard);
     cardNameInput.value = "";
     cardUrlInput.value = "";
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => renderLoading(evt.submitter, 'Сохранить'));
   }
-  newCardFormElement.addEventListener("submit", handleFormNewCardSubmit);
+newCardFormElement.addEventListener("submit", handleFormNewCardSubmit);
+}
+
+
+// смена аватара
+const avatarPopup = document.querySelector('.popup_type-avatar')
+export const profileAvatar = document.querySelector(".profile__image");
+export function handleEditAvatar() {
+  const avatarFormElement = avatarPopup.querySelector(".popup__form");
+  const avatarInput = avatarFormElement.querySelector(".popup__input_type_url");
+  let userAvatar = '';
+
+  function handleFormSubmitAvatar(evt) {
+    renderLoading(evt.submitter, 'Сохранение...');
+    evt.preventDefault();
+    updateAvatar({avatar: avatarInput.value})
+    .then((data) => {
+      profileAvatar.style = `background-image: url(${data.avatar})`;
+      userAvatar = data.avatar;
+      handleCloseModal(avatarPopup);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => renderLoading(evt.submitter, 'Сохранить'));
+  }
+  avatarFormElement.addEventListener('submit', handleFormSubmitAvatar);
 }

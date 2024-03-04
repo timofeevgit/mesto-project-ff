@@ -1,0 +1,89 @@
+likes:
+cards.js
+ВЕСЬ КОД ВНУТРИ createCard:
+вызов createCard с аргументами в т.ч. likeCard
+
+let likes = data.likes; // не обязательно
+card.id = data._id; // не обязательно
+image.src = data.link; // не обязательно
+image.alt = data.name; // не обязательно
+name.textContent = data.name; // не обязательно
+
+
+// проверяем лайкнули ли мы карточку
+const checkLike = () => {
+
+// обновляет текущий массив лайков и обновляет статус
+const updateLikes = (newLikes) => {
+
+
+const setLikeStatus = () => {
+
+likeButton.addEventListener("click", () =>
+
+
+_______________________________________________________________
+index.js
+import addLike
+const likeCard = (id, isLiked, updateLikes) => { // с вызовом addLike
+в сабмит формы новой карты вызов createCard с аргументами в т.ч. likeCard 
+
+в промисе.алл: cards.forEach((data) => {
+  const card = createCard(data, likeCard
+
+
+______________________________________________________________
+api.js
+export const addLike = (id, isLiked) => // ставит и удаляет лайки на сервере
+
+
+
+
+
+
+
+
+
+
+
+
+
+delete
+cards.js
+ВЕСЬ КОД ВНУТРИ createCard:
+export const createCard = (data, likeCard, onDelete, openCard, userId) => {
+
+  function deleteCard() {
+    card.remove();
+  }
+
+  function checkDeleteIcon() {
+    if (data.owner._id !== userId) {
+      deleteButton.style.visibility = "hidden";
+    }
+  }
+  checkDeleteIcon();
+
+
+  likeButton.addEventListener("click", () =>
+  likeCard(data._id, checkLike(), updateLikes),
+);
+deleteButton.addEventListener("click", () => 
+  onDelete(data._id, deleteCard)
+);
+buttonOpenPopupImage.addEventListener("click", () => 
+openCard(data)
+);
+
+
+index.js
+в сабмит формы новой карты вызов createCard с аргументами в т.ч. onDelete
+
+const onDelete = (id, deleteCard) => {
+
+в промисе.алл: cards.forEach((data) => {
+  const card = createCard(data, deleteCard
+
+
+api.js
+export const removeCard = (id) => {
