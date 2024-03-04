@@ -75,6 +75,7 @@ export function fillProfileInputs() {
   jobInput.value = profDesc.textContent;
 }
 
+// рендер 
 function renderLoading(saveButton, status) {
   saveButton.textContent = status;
 }
@@ -135,7 +136,7 @@ newCardFormElement.addEventListener("submit", handleFormNewCardSubmit);
 }
 
 
-// смена аватара
+// изменение аватара
 const avatarPopup = document.querySelector('.popup_type-avatar')
 export const profileAvatar = document.querySelector(".profile__image");
 export function handleEditAvatar() {

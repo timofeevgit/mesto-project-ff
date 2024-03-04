@@ -2,34 +2,6 @@ import {modalOpenImage} from './variable';
 import {setPopupOpenEventListener} from './modal';
 import {removeCard, addLikeCard} from './api';
 
-// export const initialCards = [
-//     {
-//       name: "Архыз",
-//       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-//     },
-//     {
-//       name: "Челябинская область",
-//       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-//     },
-//     {
-//       name: "Иваново",
-//       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-//     },
-//     {
-//       name: "Камчатка",
-//       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-//     },
-//     {
-//       name: "Холмогорский район",
-//       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-//     },
-//     {
-//       name: "Байкал",
-//       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-//     }
-// ];
-
-
 // Нашли темплейт карточки с контентом, который потом будет добавлять в places__list
 const template = document.querySelector("#card-template").content;
 
@@ -48,7 +20,7 @@ export function createCard(item, {deleteCard, likeCard, openImageCard, userId}) 
   if (item.owner._id !== userId) {
     cardDeleteButton.classList.add('card__delete-button-hidden');
   }
-  console.log(item.owner._id === userId)
+
   const openModal = () => openImageCard(item);
   setPopupOpenEventListener(cardImage, modalOpenImage, openModal);
 
@@ -88,7 +60,7 @@ export function handleLikeButon(likeButton, cardNode) {
         const likeCount = result.likes.length || 0;
         likeCountNode.textContent = likeCount;
       })
-      .catch((err) => console.error(`Ошибка при отправке запроса ${err}`));
+      .catch((err) => console.error(`Ошибка: ${err}`));
   } else if (isMyLikeOnCard) {
     addLikeCard(cardId, true)
       .then((result) => {
@@ -96,7 +68,7 @@ export function handleLikeButon(likeButton, cardNode) {
         const likeCount = result.likes.length || 0;
         likeCountNode.textContent = likeCount;
       })
-      .catch((err) => console.error(`Ошибка при отправке запроса ${err}`));
+      .catch((err) => console.error(`Ошибка: ${err}`));
   }
 }
 

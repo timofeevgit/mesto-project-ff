@@ -1,11 +1,11 @@
 import '../pages/index.css';
-import {initialCards, createCard, deleteCard, handleLikeButon} from "./cards";
-import {handleOpenModal, setPopupOpenEventListener, openImageModal, handleEditProfile, handleAddCard, setPopupCloseEventListener, fillProfileInputs, handleEditAvatar, profTitle, profDesc, profileAvatar} from './modal';
+import {createCard, deleteCard, handleLikeButon} from "./cards";
+import {setPopupOpenEventListener, openImageModal, handleEditProfile, handleAddCard, setPopupCloseEventListener, fillProfileInputs, handleEditAvatar, profTitle, profDesc, profileAvatar} from './modal';
 import {buttonPlus, modalNewCard, buttonEditProfile, modalEditProfile, modalOpenImage, placesList, buttonAvatar, avatarPopup} from './variable';
-import {enableValidation, validationSettings, clearValidation} from './validation';
-import {getInitialCards, getUserData, patchUserData, removeCard, addLikeCard, updateAvatar} from './api';
+import {enableValidation, validationSettings} from './validation';
+import {getInitialCards, getUserData} from './api';
 
-// выводим все карточки с сервера на страницу
+// выводим все карточки с сервера на страницу с помщью async await
 // const renderInitialCards = async () => {
 //   const initialCards = await getInitialCards();
 //   initialCards.forEach((item) => {
@@ -14,28 +14,6 @@ import {getInitialCards, getUserData, patchUserData, removeCard, addLikeCard, up
 //   });
 // }
 // await renderInitialCards()
-
-// const onDelete = (id, deleteCard) => {
-//   removeCard(id)
-//     .then((data) => {
-//       deleteCard(data);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-
-
-// const likeCard = (id, isLiked, updatedLikes) => {
-//   addLikeCard(id, isLiked)
-//   .then((data) => {
-//     updatedLikes(data.likes)
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   })
-//  }
-
 
 
 export let userId = '';
@@ -50,7 +28,7 @@ Promise.all([getInitialCards(), getUserData()])
     profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
 
     initialCards.forEach((item) => {
-      const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal, showIconDelete: false, userId})
+      const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal, userId})
       placesList.append(cardItem);
     })
   })
