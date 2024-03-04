@@ -1,4 +1,5 @@
 # Проектная работа Mesto
+GH-PAGES: https://timofeevgit.github.io/mesto-project-ff/
 
 JS:
 1. Создание и публикация карточек на странице
