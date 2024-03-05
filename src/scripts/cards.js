@@ -45,10 +45,11 @@ export function createCard(
 }
 
 // Функция удаления карточки, передаваемая в createCard как аргумент
-export function deleteCard(cardElement) {
-  const deletedCard = cardElement.target.closest(".card");
-  deletedCard.remove();
-  removeCard(deletedCard.id);
+export function deleteCard(event) {
+  const deletedCard = event.target.closest(".card");
+  removeCard(deletedCard.id)
+    .then(deletedCard.remove())
+    .catch((err) => console.error(`Ошибка удаления карточки: ${err}`));
 }
 
 export function handleLikeButon(likeButton, cardNode) {
@@ -76,8 +77,3 @@ export function handleLikeButon(likeButton, cardNode) {
       .catch((err) => console.error(`Ошибка: ${err}`));
   }
 }
-
-// функция переключает кнопку лайка
-// export const handleLikeButon = (likeButtonNode, userId, cardElement) => {
-//   likeButtonNode.classList.toggle("card__like-button_is-active");
-// };
