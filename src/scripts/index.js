@@ -25,15 +25,6 @@ import {
 import { enableValidation, validationSettings } from "./validation";
 import { getInitialCards, getUserData } from "./api";
 
-// выводим все карточки с сервера на страницу с помщью async await
-// const renderInitialCards = async () => {
-//   const initialCards = await getInitialCards();
-//   initialCards.forEach((item) => {
-//     const cardItem = createCard(item, {deleteCard, likeCard: handleLikeButon, openImageCard: openImageModal, showIconDelete: false});
-//     placesList.append(cardItem);
-//   });
-// }
-// await renderInitialCards()
 
 export let userId = "";
 let userAvatar = "";

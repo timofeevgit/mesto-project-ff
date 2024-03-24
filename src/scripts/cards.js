@@ -44,7 +44,7 @@ export function createCard(
   return cardElement;
 }
 
-// Функция удаления карточки, передаваемая в createCard как аргумент
+// Функция удаления карточки
 export function deleteCard(event) {
   const deletedCard = event.target.closest(".card");
   removeCard(deletedCard.id)
@@ -58,7 +58,7 @@ export function handleLikeButon(likeButton, cardNode) {
   );
   const cardId = cardNode.id;
   const likeCountNode = cardNode.querySelector(".like-button__count");
-  // likeCountNode.textContent = likeCount;
+
   if (!isMyLikeOnCard) {
     addLikeCard(cardId, false)
       .then((result) => {

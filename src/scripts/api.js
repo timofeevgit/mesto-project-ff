@@ -16,7 +16,7 @@ function checkResponse(res) {
   }
 }
 
-// получение данных обо мне
+// получение данных о пользователе
 export const getUserData = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
